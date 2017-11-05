@@ -1,0 +1,9 @@
+{
+  "dnp-contrib": {
+    "label": {
+      "server": "Client",
+      "showActivities": "Show Activities",
+      "showErrors": "Show Errors"
+    }
+  }
+}
