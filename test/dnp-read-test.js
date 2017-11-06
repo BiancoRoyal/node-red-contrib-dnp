@@ -10,10 +10,10 @@
 
 'use strict'
 
-var clientNode = require('../../src/dnp-client.js')
-var serverNode = require('../../src/dnp-server.js')
-var readNode = require('../../src/dnp-read.js')
-var helper = require('../helper.js')
+var clientNode = require('../src/dnp-client.js')
+var serverNode = require('../src/dnp-server.js')
+var readNode = require('../src/dnp-read.js')
+var helper = require('./helper.js')
 
 describe('Read node Testing', function () {
   before(function (done) {
@@ -26,14 +26,44 @@ describe('Read node Testing', function () {
 
   describe('Node', function () {
     it('simple read node should be loaded', function (done) {
-      helper.load([clientNode, serverNode, readNode], [], function () {
-        var dnpServer = helper.getNode('e54529b9.952ea8')
+      helper.load([readNode, serverNode, clientNode], [
+        {
+          "id": "8482fcf8.62d6c",
+          "type": "DNP-Read",
+          "z": "11c6703a.132f6",
+          "name": "dnpRead",
+          "server": "7576cb96.0fe7a4",
+          "x": 220,
+          "y": 130,
+          "wires": [
+            []
+          ]
+        },
+        {
+          "id": "1bf6dfe7.a8473",
+          "type": "DNP-Server",
+          "z": "11c6703a.132f6",
+          "name": "dnpServer",
+          "x": 230,
+          "y": 190,
+          "wires": [
+            []
+          ]
+        },
+        {
+          "id": "7576cb96.0fe7a4",
+          "type": "DNP-Client",
+          "z": "",
+          "name": "dnpClient"
+        }
+      ], function () {
+        var dnpServer = helper.getNode('1bf6dfe7.a8473')
         dnpServer.should.have.property('name', 'dnpServer')
 
-        var dnpClient = helper.getNode('dc764ad7.580238')
+        var dnpClient = helper.getNode('7576cb96.0fe7a4')
         dnpClient.should.have.property('name', 'dnpClient')
 
-        var dnpRead = helper.getNode('b9cf4e9c.4d53a')
+        var dnpRead = helper.getNode('8482fcf8.62d6c')
         dnpRead.should.have.property('name', 'dnpRead')
 
         done()
