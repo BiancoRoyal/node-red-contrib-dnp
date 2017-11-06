@@ -1,7 +1,7 @@
 ![Platform Node-RED](http://b.repl.ca/v1/Platform-Node--RED-red.png)
-![Node-RED IIoT OPC UA](http://b.repl.ca/v1/Node--RED-DNP3-blue.png)
-![Repository GitHub](http://b.repl.ca/v1/Repository-GitHub-orange.png)
-![Quality Travis CI](http://b.repl.ca/v1/Quality-Travis_CI-green.png)
+![Node-RED DNP3](http://b.repl.ca/v1/Node--RED-DNP3-blue.png)
+[![Repository GitHub](http://b.repl.ca/v1/Repository-GitHub-orange.png)](https://github.com/biancode/node-red-contrib-dnp)
+[![Quality Travis CI](http://b.repl.ca/v1/Quality-Travis_CI-green.png)](https://travis-ci.org/biancode/node-red-contrib-dnp)
 
 [![nodemodbus64](images/dnp-icon-small64.png)](http://www.dnp.org/)
 
