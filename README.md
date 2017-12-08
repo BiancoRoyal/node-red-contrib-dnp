@@ -9,7 +9,7 @@
 # node-red-contrib-dnp
 Distributed Network Protocol toolbox for Node-RED.
 
-!!! NOT READY TO USE - UNDER DEVELOPMENT !!!
+!!! NOT READY TO USE - UNDER DEVELOPMENT - START YOUR CONTRIBUTION !!!
 ## [Support for the project straight away!][3]
 
 * based on dnp3 library v0.0.x
@@ -35,7 +35,8 @@ try these options on npm install to build, if you have problems to install
 ## Contributing
 
 Let's work together! 
-Please read and accepted [CONTRIBUTING](CONTRIBUTING.md) by your sign and send it via E-Mail.
+Please read and in best case accept [CONTRIBUTING](CONTRIBUTING.md) by your sign and send it via E-Mail.
+You could also send just a pull request.
 
 ### License
 
