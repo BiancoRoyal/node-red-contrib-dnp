@@ -11,3 +11,5 @@ var de = de || {biancoroyal: {dnp: {core: {}}}} // eslint-disable-line no-use-be
 de.biancoroyal.dnp.core.internalDebugLog = de.biancoroyal.dnp.core.internalDebugLog || require('debug')('opcuaIIoT:core') // eslint-disable-line no-use-before-define
 de.biancoroyal.dnp.core.detailDebugLog = de.biancoroyal.dnp.core.detailDebugLog || require('debug')('opcuaIIoT:core:details') // eslint-disable-line no-use-before-define
 de.biancoroyal.dnp.core.specialDebugLog = de.biancoroyal.dnp.core.specialDebugLog || require('debug')('opcuaIIoT:core:special') // eslint-disable-line no-use-before-define
+
+module.exports = de.biancoroyal.dnp.core
