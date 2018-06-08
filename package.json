@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-dnp",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": false,
   "description": "The DNP/DNP3 toolbox package for Node-RED.",
   "repository": {
@@ -14,16 +14,13 @@
     "underscore": "1.8.3"
   },
   "keywords": [
-    "node-red",
-    "DNP",
-    "DNP3",
     "dnp",
     "dnp3",
-    "nodered",
-    "iiot",
-    "IIoT",
+    "fieldbus",
+    "automation",
     "biancode",
-    "modbus"
+    "modbus",
+    "opcua"
   ],
   "author": "Klaus Landsdorf <klaus.landsdorf@bianco-royal.de>",
   "license": "BSD-3-Clause",
