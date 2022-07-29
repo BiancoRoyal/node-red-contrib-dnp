@@ -2,7 +2,7 @@
  * Original Work Copyright 2014 IBM Corp.
  * node-red
  *
- * Copyright (c) 2017, Klaus Landsdorf (http://bianco-royal.de/)
+ * Copyright (c) 2022 Klaus Landsdorf (http://node-red.plus/)
  * All rights reserved.
  * node-red-contrib-dnp - The BSD 3-Clause License
  *
@@ -13,15 +13,27 @@
 var clientNode = require('../src/dnp-client.js')
 var serverNode = require('../src/dnp-server.js')
 var readNode = require('../src/dnp-read.js')
-var helper = require('./helper.js')
+
+var helper = require('node-red-node-test-helper')
+helper.init(require.resolve('node-red'))
 
 describe('Read node Testing', function () {
-  before(function (done) {
-    helper.startServer(done)
+  beforeEach(function (done) {
+    helper.startServer(function () {
+      done()
+    })
   })
 
-  afterEach(function () {
-    helper.unload()
+  afterEach(function (done) {
+    helper.unload().then(function () {
+      helper.stopServer(function () {
+        done()
+      })
+    }).catch(function () {
+      helper.stopServer(function () {
+        done()
+      })
+    })
   })
 
   describe('Node', function () {

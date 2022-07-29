@@ -1,0 +1,21 @@
+[
+  {
+    "id": "effec8756b41b92c",
+    "type": "tab",
+    "label": "DNP3 Write",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "7f1ff4d3391ebced",
+    "type": "DNP-Write",
+    "z": "effec8756b41b92c",
+    "name": "",
+    "x": 170,
+    "y": 120,
+    "wires": [
+      []
+    ]
+  }
+]

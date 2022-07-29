@@ -1,0 +1,21 @@
+[
+  {
+    "id": "bf03fd2aadfd90f2",
+    "type": "tab",
+    "label": "DNP3 Read",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "aefb6e9d5678a748",
+    "type": "DNP-Read",
+    "z": "bf03fd2aadfd90f2",
+    "name": "",
+    "x": 230,
+    "y": 100,
+    "wires": [
+      []
+    ]
+  }
+]

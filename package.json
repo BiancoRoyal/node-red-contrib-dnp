@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-dnp",
-  "version": "0.1.0",
+  "version": "0.0.11",
   "private": false,
   "description": "The DNP/DNP3 toolbox package for Node-RED.",
   "repository": {
@@ -14,7 +14,6 @@
     "underscore": "~1.13.4"
   },
   "keywords": [
-    "node-red",
     "dnp",
     "fieldbus",
     "automation",
@@ -41,7 +40,7 @@
   "scripts": {
     "test": "standard --fix && mocha test/* --reporter dot",
     "build": "standard --fix && gulp publish",
-    "prepublishOnly": "standard --fix && npm run build && npm test",
+    "prepublishOnly": "standard --fix && npm run build && npm run rewrite-changelog && npm test && mocha test --recursive --timeout 5000 --reporter dot && istanbul cover _mocha -- --recursive --timeout 5000",
     "ci-publish": "ci-publish",
     "release": "standard-version -a",
     "release:beta": "standard-version --prerelease beta",
@@ -53,7 +52,10 @@
     "dev-unlink": "npm unlink node-red-contrib-dnp -g"
   },
   "files": [
-    "dnp"
+    "docs",
+    "examples",
+    "dnp",
+    "supporter.js"
   ],
   "devDependencies": {
     "@babel/cli": "^7.18.9",
@@ -93,7 +95,6 @@
     "when": "^3.7.8"
   },
   "directories": {
-    "doc": "docs",
     "example": "examples",
     "test": "test"
   },
