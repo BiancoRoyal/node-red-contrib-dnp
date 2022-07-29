@@ -1,66 +1,69 @@
 /*
- The BSD 3-Clause License
+ The MIT License
 
- Copyright (c) 2017 - Klaus Landsdorf (http://bianco-royal.de/)
+ Copyright (c) 2017-2022 Klaus Landsdorf (http://node-red.plus/)
  All rights reserved.
  node-red-contrib-dnp
  */
 
 'use strict'
 
-const gulp = require('gulp')
+const { series, src, dest } = require('gulp')
 const htmlmin = require('gulp-htmlmin')
 const jsdoc = require('gulp-jsdoc3')
 const clean = require('gulp-clean')
 const uglify = require('gulp-uglify')
 const babel = require('gulp-babel')
-const sequence = require('gulp-sequence')
 const sourcemaps = require('gulp-sourcemaps')
 const pump = require('pump')
+const replace = require('gulp-replace')
+const changelog = require('gulp-conventional-changelog')
 
-gulp.task('default', function () {
-  // place code for your default task here
-})
+function releaseIcons () {
+  return src('src/icons/**/*').pipe(dest('dnp/icons'))
+}
 
-gulp.task('docs', sequence('doc', 'docIcons', 'docExamples', 'docImages'))
-gulp.task('build', sequence('clean', 'web', 'nodejs', 'locale'))
-gulp.task('publish', sequence('build', 'public', 'icons', 'docs', 'releaseExamples'))
+function docIcons () {
+  return src('src/icons/**/*').pipe(dest('docs/gen/icons'))
+}
 
-gulp.task('icons', function () {
-  return gulp.src('src/icons/**/*').pipe(gulp.dest('dnp/icons'))
-})
+function docImages () {
+  return src('images/**/*').pipe(dest('docs/gen/images'))
+}
 
-gulp.task('docIcons', function () {
-  return gulp.src('src/icons/**/*').pipe(gulp.dest('docs/gen/icons'))
-})
+function releaseLocal () {
+  return src('src/locales/**/*').pipe(dest('dnp/locales'))
+}
 
-gulp.task('docExamples', function () {
-  return gulp.src('examples/**/*').pipe(gulp.dest('docs/gen/examples'))
-})
+function releasePublicData () {
+  return src('src/public/**/*').pipe(dest('dnp/public'))
+}
 
-gulp.task('releaseExamples', function () {
-  return gulp.src('examples/**/*').pipe(gulp.dest('dnp/examples'))
-})
+function cleanProject () {
+  return src(['dnp', 'docs/gen', 'jcoverage'], { allowEmpty: true })
+    .pipe(clean({ force: true }))
+}
 
-gulp.task('docImages', function () {
-  return gulp.src('images/**/*').pipe(gulp.dest('docs/gen/images'))
-})
+function changelogUpdate () {
+  return src('CHANGELOG.md')
+    .pipe(changelog({
+      // conventional-changelog options go here
+      preset: 'angular',
+      releaseCount: 0
+    }, {
+      // context goes here
+    }, {
+      // git-raw-commits options go here
+    }, {
+      // conventional-commits-parser options go here
+    }, {
+      // conventional-changelog-writer options go here
+    }))
+    .pipe(dest('./'))
+}
 
-gulp.task('locale', function () {
-  return gulp.src('src/locales/**/*').pipe(gulp.dest('dnp/locales'))
-})
-
-gulp.task('public', function () {
-  return gulp.src('src/public/**/*').pipe(gulp.dest('dnp/public'))
-})
-
-gulp.task('clean', function () {
-  return gulp.src(['dnp', 'docs/gen', 'maps'])
-    .pipe(clean({force: true}))
-})
-
-gulp.task('web', function () {
-  return gulp.src('src/*.htm*')
+function releaseWebContent () {
+  return src('src/*.htm*')
     .pipe(htmlmin({
       minifyJS: true,
       minifyCSS: true,
@@ -73,21 +76,42 @@ gulp.task('web', function () {
       processScripts: ['text/x-red'],
       quoteCharacter: "'"
     }))
-    .pipe(gulp.dest('dnp'))
-})
+    .pipe(dest('dnp'))
+}
 
-gulp.task('nodejs', function (cb) {
+function releaseJSContent (cb) {
+  const anchor = '// SOURCE-MAP-REQUIRED'
+
   pump([
-    gulp.src('src/**/*.js')
-      .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(babel({presets: ['es2015']}))
-      .pipe(uglify())
-      .pipe(sourcemaps.write('../maps')), gulp.dest('dnp')],
-  cb
-  )
-})
+      src('src/**/*.js')
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(replace(anchor, 'require(\'source-map-support\').install()'))
+        .pipe(babel({ presets: ['@babel/env'] }))
+        .pipe(uglify())
+        .pipe(sourcemaps.write('maps')), dest('dnp')],
+    cb)
+}
 
-gulp.task('doc', function (cb) {
-  gulp.src(['README.md', 'src/**/*.js'], {read: false})
+function codeJSContent (cb) {
+  const anchor = '// SOURCE-MAP-REQUIRED'
+
+  pump([
+      src('src/**/*.js')
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(replace(anchor, 'require(\'source-map-support\').install()'))
+        .pipe(babel({ presets: ['@babel/env'] }))
+        .pipe(sourcemaps.write('maps')), dest('code')],
+    cb)
+}
+
+function doc (cb) {
+  src(['README.md', 'src/**/*.js'], { read: false })
     .pipe(jsdoc(cb))
-})
+}
+
+exports.default = series(cleanProject, releaseWebContent, releaseJSContent, codeJSContent, releaseLocal, releasePublicData, releaseIcons, doc, docIcons, docImages, changelogUpdate)
+exports.clean = cleanProject
+exports.build = series(cleanProject, releaseWebContent, releaseJSContent, releaseLocal, codeJSContent)
+exports.buildDocs = series(doc, docIcons, docImages)
+exports.changelog = changelogUpdate
+exports.publish = series(cleanProject, releaseWebContent, releaseJSContent, releaseLocal, codeJSContent, releasePublicData, releaseIcons, doc, docIcons, docImages, changelogUpdate)

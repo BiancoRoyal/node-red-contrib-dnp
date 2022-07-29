@@ -31,12 +31,12 @@ relevant nodes, press Ctrl-E and copy the flow data from the Export dialog.
 
 At a minimum, please include:
 
- - Version of node.js? (should be >=v8.8.1)
- - Version of Node-RED? (should be >=v0.17.5)
- - Version of node-red-contrib-dnp?
+ - Version of node.js? (should be >= 16)
+ - Version of Node-RED? (should be >= 3)
+ - Version of node-red-contrib-dnp? (should be >= 0.1)
  
  - What is your platform? (Linux, macOS, ...)
- - What does `DEBUG=dnpProtocol:* node-red -v` say? (log files are welcome)
+ - What does `DEBUG=dnp:* node-red -v` say? (log files are welcome)
 
 ## Feature requests
 
@@ -53,7 +53,7 @@ Please ensure you follow the coding standards used through-out the existing code
 
 Some basic rules include:
 
- - all files must have the BSD 3-Clause license in the header.
+ - all files must have the MIT license in the header.
  - indent with 2-spaces, no tabs. No arguments.
  - follow ES6 coding standards
  - follow standard.js coding standards

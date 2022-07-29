@@ -1,5 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-npm outdated
+# this sh is to see possible updates from NPM
+
+npm cache verify
+
+npm outdated --depth=0
 
 npm install

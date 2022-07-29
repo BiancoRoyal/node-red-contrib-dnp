@@ -1,8 +1,22 @@
-#!/usr/bin/env bash
-npm install -g npm-check-updates
+#!/usr/bin/env sh
 
-npm outdated
+# this sh is to upgrade all package dependencies from NPM
+# you need to install before: npm i -g npm-check-updates
 
-ncu -u --upgradeAll --packageFile package.json
+rm package-lock.json
+
+npm cache verify
+
+npm outdated --depth=0
+
+ncu -u
+
+npm i
+
+npm i --only=dev
 
 npm install
+
+npm test
+
+npm run build
