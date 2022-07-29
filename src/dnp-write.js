@@ -12,9 +12,9 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config)
     this.name = config.name
 
-    let node = this
+    const node = this
 
-    node.status({fill: 'blue', shape: 'ring', text: 'not ready to use'})
+    node.status({ fill: 'blue', shape: 'ring', text: 'not ready to use' })
 
     node.on('input', function (msg) {
       node.send(msg)
