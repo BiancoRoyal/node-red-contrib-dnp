@@ -100,12 +100,13 @@
   },
   "standard": {
     "ignore": [
+      "code/",
       "node_modules/",
       "examples/",
       "dnp/",
       "docs",
-      "src/public/",
-      "test"
+      "test",
+      "extras"
     ]
   },
   "main": "index.js"
